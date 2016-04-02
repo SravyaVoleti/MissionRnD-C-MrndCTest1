@@ -41,16 +41,16 @@ int * find_sequences(int *arr, int len){
 	r1 = *(arr + 1) / *(arr + 0);
 	for (i = 0; i < len; i++) {
 		if (*(arr + i+ 1) - *(arr + i) != d1) {
-			*(arr + k) = pre;
+			*(res + k) = pre;
 			k++;
-			*(arr + k) = i;
+			*(res + k) = i;
 			pre = i;
 		}
 		if (*(arr + i + 1) / *(arr + i) != r1) {
-			*(arr + 4) = pre;
-			*(arr + 5) = i;
+			*(res + 4) = pre;
+			*(res + 5) = i;
 		}
 	}
 	
-	return ;
+	return res;
 }
