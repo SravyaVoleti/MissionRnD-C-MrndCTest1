@@ -28,7 +28,70 @@ struct node{
 	struct node *next;
 };
 
-
+int days(int x) {
+	int y = 0;
+	switch (x) {
+	case 1: y = 0; break;
+	case 2:y = 31; break;
+	case 3:y = 59; break;
+	case 4:y = 90; break;
+	case 5:y = 120; break;
+	case 6:y = 151; break;
+	case 7:y = 181; break;
+	case 8:y = 212; break;
+	case 9:y = 243; break;
+	case 10:y = 273; break;
+	case 11:y = 304; break;
+	case 12:y = 334; break;
+	}
+	return y;
+}
 int between_days(struct node *date1head, struct node *date2head){
-	return -1;
+
+	if (date1head == NULL && date2head == NULL)
+		return -1;
+
+	int d1, d2, y1 = 0, y2 = 0, m1, m2, res, ref, dd1, dd2, i;
+	struct node *p1, *p2;
+	p1 = date1head;
+	p2 = date2head;
+	d1 = (date1head->data * 10) +date1head->next->data;
+	date1head = date1head->next->next;
+	d2 = (date2head->data * 10) + date2head->next->data;
+	date2head = date2head->next->next;
+	m1 = (date1head->data * 10) + date1head->next->data;
+	date1head = date1head->next->next;
+	m2 = (date2head->data * 10) + date2head->next->data;
+	date2head = date2head->next->next;
+	while (date1head != NULL && date2head != NULL) {
+		y1 = (y1 * 10) + date1head->data;
+		y2 = (y2 * 10) + date2head->data;
+		date1head = date1head->next;
+		date2head = date2head->next;
+	}
+	ref = y1;
+	if (y2 < y1)
+		ref = y2;
+	dd1 = 0;
+	dd1 = days(m1);
+	for (i = ref; i < y1; i++){
+		if (i % 4 == 0)
+			dd1 += 1;
+	}
+	dd1 = dd1 + d1 + (y1 - ref) * 365;
+	dd2 = 0;
+	for (i = ref; i < y2; i++) {
+		if (i % 4 == 0)
+			dd2 += 1;
+	}
+	dd2 = days(m2) + dd2 + d2 + ((y2 - ref) * 365);
+	if (dd1 > dd2)
+		res = dd1 - dd2;
+	else if(dd2 > dd1)
+		res = dd2 - dd1;
+	else
+		res = 0;
+
+
+	return res-1;
 }
